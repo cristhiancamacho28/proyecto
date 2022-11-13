@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta Temas</title>
+
+    <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" th:href="@{/css/sweetalert.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+	<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/sweetalert.min.js}"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>	
+
+    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+</head>
+<body>
+
+    
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Cursos App</a>
+            </div>
+    
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{/categorias/listar}">Categorias</a></li>
+                    <li><a th:href="@{/categorias/listarAsync}">Categorias Asincrono</a></li>
+
+                    <li><a th:href="@{/instructores/listarAsync}">Instructores</a></li>
+                    <li><a th:href="@{/temarios/listarAsync}">Temario</a></li>
+                    <li><a th:href="@{/temas/listarAsync}">Temas</a></li>
+                    <li><a th:href="@{/cursos/listar}">Cursos</a></li>
+                    
+                </ul>
+    
+    
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <div class="container body-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Formulario Temas</h2>
+                </div>
+               
+            </div>
+            <br>
+            <div class="row">
+                <form method="post" th:action="@{/temas/insert}"
+                th:object="${tema}">
+            <input type="hidden" th:field="*{id}"/>
+
+
+            <div class="col-10 offset-1 mt-4">
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Nombre</label>
+                    </div>
+
+                    <div class="col-8">
+                        <input type="text" class="form-control" th:field="*{nombre}"/>
+                        <span th:if="${#fields.hasErrors('nombre')}"
+                        th:errors = "*{nombre}" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Duracion</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" th:field="*{duracion}"/>
+                        <span th:if="${#fields.hasErrors('duracion')}"
+                        th:errors = "*{duracion}" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Temario</label>
+                    </div>
+                    <div class="col-8">                                        
+                        <select th:field="*{temario.id}" class="form-control">
+                            <option value="">---Seleccionar un temario----</option>   
+                            <option th:each="temario : ${temarios}"   
+                                th:value="${temario.id}" th:text="${temario.id}"></option>
+                        </select>                                      
+                        <span th:if="${#fields.hasErrors('temario')}"
+                        th:errors = "*{temario}" class="text-danger"></span>
+                    </div>
+                </div>                
+              
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary
+                                form-control">Guardar</button>
+                                &nbsp;
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <a th:href="@{/temas/listar}"
+                                class="btn btn-success
+                                form-control">Volver a listar</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
